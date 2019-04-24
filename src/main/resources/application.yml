@@ -1,0 +1,26 @@
+spring:
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "admin"
+    password: "admin"
+    queues:
+      tracking: "ha.tracking"
+    consumers:
+      tracking:
+        queue: ${spring.rabbitmq.queues.tracking}
+        routing-key: "ha.tracking"
+        exchange: "ha.tracking"
+        dead-letter-queue: "ha.tracking.dlq"
+        dead-letter-exchange: "ha.tracking.dlx"
+        dead-letter-routing-key: "ha.tracking"
+        durable: true
+        exclusive: false
+        auto-delete: false
+        dlq-queue-mode: "lazy"
+        concurrent-consumers: 4
+        max-concurrent-consumers: 4
+        autostartup: true
+        requeue-rejected: false
+server:
+  port: 8888
